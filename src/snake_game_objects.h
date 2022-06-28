@@ -18,7 +18,7 @@ struct Vel {
 
     Vel(int x = 0, int y = 0) : x(x), y(y){};
 
-    Vel(VelDirection dir);
+    static Vel from_dir(VelDirection dir);
 };
 
 struct Pos {
