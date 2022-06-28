@@ -1,14 +1,13 @@
 #ifndef SNAKE_GAME_H
 #define SNAKE_GAME_H
 
-#include <vector>
 #include <string>
+#include <vector>
 
-#include "snake_game_parts.h"
+#include "snake_game_objects.h"
 
-class SnakeGame
-{
-public:
+class SnakeGame {
+   public:
     SnakeGame();
 
     void display() const;
@@ -25,7 +24,7 @@ public:
 
     bool has_collided() const;
 
-private:
+   private:
     Snake snake;
 
     Fruit fruit;
