@@ -1,19 +1,17 @@
 #ifndef SNAKE_GAME_PARTS_H
 #define SNAKE_GAME_PARTS_H
 
-#include <vector>
 #include <optional>
+#include <vector>
 
-enum class VelDirection
-{
+enum class VelDirection {
     Up,
     Down,
     Left,
     Right
 };
 
-struct Vel
-{
+struct Vel {
     int x;
 
     int y;
@@ -25,8 +23,7 @@ struct Vel
     Vel(VelDirection dir);
 };
 
-struct Pos
-{
+struct Pos {
     int x;
 
     int y;
@@ -38,8 +35,7 @@ struct Pos
     Pos &operator+=(const Vel &vel);
 };
 
-struct SnakePiece
-{
+struct SnakePiece {
     Pos pos;
 
     Vel vel;
@@ -51,12 +47,9 @@ struct SnakePiece
     SnakePiece(int x, int y);
 
     SnakePiece(Pos pos, Vel vel);
-
-    void display() const;
 };
 
-struct Snake
-{
+struct Snake {
     SnakePiece head;
 
     std::vector<SnakePiece> tail;
@@ -65,21 +58,16 @@ struct Snake
 
     int get_length() const;
 
-    void time_step();
-
-    void display() const;
+    void update();
 
     Snake();
 };
 
-struct Fruit
-{
+struct Fruit {
     Pos pos;
 
     Fruit() = default;
 
     Fruit(int x, int y);
-
-    void display() const;
 };
 #endif
