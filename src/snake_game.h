@@ -10,8 +10,6 @@ class SnakeGame {
    public:
     SnakeGame();
 
-    void display() const;
-
     void update(VelDirection);
 
     int get_score() const;
