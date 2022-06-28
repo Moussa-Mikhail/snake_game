@@ -16,9 +16,7 @@ struct Vel {
 
     int y;
 
-    Vel() = default;
-
-    Vel(int x, int y);
+    Vel(int x = 0, int y = 0) : x(x), y(y){};
 
     Vel(VelDirection dir);
 };
@@ -28,11 +26,11 @@ struct Pos {
 
     int y;
 
-    Pos() = default;
-
-    Pos(int x, int y);
+    Pos(int x = 0, int y = 0) : x(x), y(y){};
 
     Pos &operator+=(const Vel &vel);
+
+    Pos &operator-=(const Vel &vel);
 };
 
 struct SnakePiece {
