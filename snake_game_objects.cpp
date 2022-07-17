@@ -38,6 +38,10 @@ Pos &Pos::operator-=(const Vel &vel) {
     return *this;
 }
 
+bool Pos::operator==(const Pos &rhs) const {
+    return x == rhs.x && y == rhs.y;
+}
+
 SnakePiece::SnakePiece(int x, int y) {
     pos = Pos(x, y);
 
