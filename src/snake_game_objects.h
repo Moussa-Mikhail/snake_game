@@ -4,7 +4,7 @@
 #include <optional>
 #include <vector>
 
-enum class VelDirection {
+enum class VelDir {
     Up,
     Down,
     Left,
@@ -18,7 +18,7 @@ struct Vel {
 
     Vel(int x = 0, int y = 0) : x(x), y(y){};
 
-    static Vel from_dir(VelDirection dir);
+    static Vel from_dir(VelDir dir);
 };
 
 struct Pos {
@@ -31,6 +31,8 @@ struct Pos {
     Pos &operator+=(const Vel &vel);
 
     Pos &operator-=(const Vel &vel);
+
+    bool operator==(const Pos &pos) const = default;
 };
 
 struct SnakePiece {
@@ -52,13 +54,15 @@ struct Snake {
 
     std::vector<SnakePiece> tail;
 
-    std::optional<VelDirection> curr_dir;
-
     int get_length() const;
 
-    void update();
+    void update_head(VelDir dir);
 
-    Snake();
+    void update_tail();
+
+    Snake() = default;
+
+    Snake(int init_x, int init_y, int init_length);
 };
 
 struct Fruit {
