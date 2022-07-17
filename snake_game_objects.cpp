@@ -26,16 +26,16 @@ Vel Vel::from_dir(VelDir dir) {
     }
 }
 
-Pos &operator+=(Pos &pos, const Vel &vel) {
-    pos.x += vel.x;
-    pos.y += vel.y;
-    return pos;
+Pos &Pos::operator+=(const Vel &vel) {
+    x += vel.x;
+    y += vel.y;
+    return *this;
 }
 
-Pos &operator-=(Pos &pos, const Vel &vel) {
-    pos.x -= vel.x;
-    pos.y -= vel.y;
-    return pos;
+Pos &Pos::operator-=(const Vel &vel) {
+    x -= vel.x;
+    y -= vel.y;
+    return *this;
 }
 
 SnakePiece::SnakePiece(int x, int y) {
@@ -44,12 +44,22 @@ SnakePiece::SnakePiece(int x, int y) {
     vel = Vel(0, 0);
 }
 
+void SnakePiece::update_pos() {
+    pos += vel;
+}
+
+void Head::update_dir(std::optional<VelDir> dir) {
+    if (dir) {
+        vel = Vel::from_dir(*dir);
+    }
+}
+
 Fruit::Fruit(int x, int y) {
     pos = Pos(x, y);
 }
 
 Snake::Snake(int init_x, int init_y, int init_length) {
-    head = SnakePiece(init_y, init_x);
+    head = Head(init_y, init_x);
 
     tail.resize(init_length);
 
@@ -60,6 +70,25 @@ Snake::Snake(int init_x, int init_y, int init_length) {
 
 int Snake::get_length() const { return tail.size(); };
 
-void Snake::update_head(VelDir dir) {
-    head.vel = Vel::from_dir(dir);
+void Snake::update_head(std::optional<VelDir> dir) {
+    head.update_dir(dir);
+
+    head.update_pos();
+}
+
+void Snake::update_tail() {
+    for (int i = tail.size() - 1; i > 0; i--) {
+        tail[i].update_pos();
+        tail[i].vel = tail[i - 1].vel;
+    }
+}
+
+bool Snake::has_collided_with_tail() const {
+    for (const auto &tail_piece : tail) {
+        if (tail_piece.pos == head.pos) {
+            return true;
+        }
+    }
+
+    return false;
 }

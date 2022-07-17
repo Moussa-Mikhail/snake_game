@@ -40,29 +40,37 @@ struct SnakePiece {
 
     Vel vel;
 
-    void update_pos();
-
     SnakePiece() = default;
 
     SnakePiece(int x, int y);
 
     SnakePiece(Pos pos, Vel vel);
+
+    void update_pos();
+};
+
+struct Head : SnakePiece {
+    using SnakePiece::SnakePiece;
+
+    void update_dir(std::optional<VelDir> dir);
 };
 
 struct Snake {
-    SnakePiece head;
+    Head head;
 
     std::vector<SnakePiece> tail;
-
-    int get_length() const;
-
-    void update_head(VelDir dir);
-
-    void update_tail();
 
     Snake() = default;
 
     Snake(int init_x, int init_y, int init_length);
+
+    int get_length() const;
+
+    void update_head(std::optional<VelDir> dir);
+
+    void update_tail();
+
+    bool has_collided_with_tail() const;
 };
 
 struct Fruit {

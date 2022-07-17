@@ -23,9 +23,7 @@ int SnakeGame::get_score() const {
 }
 
 void SnakeGame::update(std::optional<VelDir> dir) {
-    if (dir) {
-        snake.update_head(dir.value());
-    }
+    snake.update_head(dir);
 
     snake.update_tail();
 }
@@ -41,13 +39,5 @@ bool SnakeGame::has_collided_with_walls() const {
 }
 
 bool SnakeGame::has_collided_with_tail() const {
-    const auto head_pos = snake.head.pos;
-
-    for (const auto &tail_piece : snake.tail) {
-        if (tail_piece.pos == head_pos) {
-            return true;
-        }
-    }
-
-    return false;
+    return snake.has_collided_with_tail();
 }
