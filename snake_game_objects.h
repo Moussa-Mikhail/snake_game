@@ -32,7 +32,7 @@ struct Pos {
 
     Pos &operator-=(const Vel &vel);
 
-    bool operator==(const Pos &pos) const = default;
+    bool operator==(const Pos &pos) const;
 };
 
 struct SnakePiece {
