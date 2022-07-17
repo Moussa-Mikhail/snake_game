@@ -3,10 +3,10 @@
 #include <iostream>
 #include <string>
 
+#include "display.cpp"
 #include "snake_game.cpp"
 
-int main()
-{
+int main() {
     clear_screen();
 
     setCursorPosition(10, 5);
@@ -16,6 +16,6 @@ int main()
     setCursorPosition(10, 9);
     std::cout << 'Z';
     setCursorPosition(10, 5);
-    std::cout << "     "; // Overwrite characters with spaces to "erase" them
+    std::cout << "     ";  // Overwrite characters with spaces to "erase" them
     std::cout.flush();
 }
