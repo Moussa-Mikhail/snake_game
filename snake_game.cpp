@@ -13,9 +13,9 @@ SnakeGame::SnakeGame() {
 
     int init_y = MAX_Y / 2;
 
-    Snake snake = Snake(init_x, init_y, INITIAL_LENGTH);
+    snake = Snake(init_x, init_y, INITIAL_LENGTH);
 
-    Fruit fruit = Fruit(init_x + 2 * distance_from_center, init_y);
+    fruit = Fruit(init_x + 2 * distance_from_center, init_y);
 }
 
 int SnakeGame::get_score() const {
