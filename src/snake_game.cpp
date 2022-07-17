@@ -1,80 +1,53 @@
 // Implementation file for SnakeGame class
 
+#include "snake_game.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
-#include <windows.h>
 
-#include "snake_game.h"
+SnakeGame::SnakeGame() {
+    int distance_from_center = 4;
 
-void setCursorPosition(int x, int y)
-{
-    static const HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    std::cout.flush();
-    COORD coord = {(SHORT)x, (SHORT)y};
-    SetConsoleCursorPosition(hOut, coord);
+    int init_x = MAX_X / 2 - distance_from_center;
+
+    int init_y = MAX_Y / 2;
+
+    Snake snake = Snake(init_x, init_y, INITIAL_LENGTH);
+
+    Fruit fruit = Fruit(init_x + 2 * distance_from_center, init_y);
 }
 
-void clear_screen(char fill = ' ')
-{
-    COORD tl = {0, 0};
-    CONSOLE_SCREEN_BUFFER_INFO s;
-    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    GetConsoleScreenBufferInfo(console, &s);
-    DWORD written, cells = s.dwSize.X * s.dwSize.Y;
-    FillConsoleOutputCharacter(console, fill, cells, tl, &written);
-    FillConsoleOutputAttribute(console, s.wAttributes, cells, tl, &written);
-    SetConsoleCursorPosition(console, tl);
+int SnakeGame::get_score() const {
+    return snake.get_length() - INITIAL_LENGTH;
 }
 
-template <typename T>
-void setCursorPosition(T obj)
-{
-    int x = obj.pos.x;
-
-    int y = obj.pos.y;
-}
-
-SnakePiece::SnakePiece(int x, int y)
-{
-    pos = Pos(x, y);
-
-    vel = Vel(0, 0);
-}
-
-Snake::Snake()
-{
-    int init_y = 7;
-
-    int init_x = 4;
-
-    head = SnakePiece(init_y, init_x);
-
-    int length = 3;
-
-    tail.resize(length);
-
-    for (int i = 0; i < length; i++)
-    {
-        tail[i] = SnakePiece(init_y, init_x - 1 - i);
+void SnakeGame::update(std::optional<VelDir> dir) {
+    if (dir) {
+        snake.update_head(dir.value());
     }
+
+    snake.update_tail();
 }
 
-Fruit::Fruit(int x, int y)
-{
-    pos = Pos(x, y);
+bool SnakeGame::has_collided() const {
+    return has_collided_with_walls() || has_collided_with_tail();
 }
 
-SnakeGame::SnakeGame()
-{
-    Snake snake = Snake();
+bool SnakeGame::has_collided_with_walls() const {
+    const auto [x, y] = snake.head.pos;
 
-    Fruit fruit = Fruit(7, 12);
+    return x < 0 || x >= MAX_X || y < 0 || y >= MAX_Y;
 }
 
-void SnakeGame::display() const
-{
-    snake.display();
+bool SnakeGame::has_collided_with_tail() const {
+    const auto head_pos = snake.head.pos;
 
-    fruit.display();
+    for (const auto &tail_piece : snake.tail) {
+        if (tail_piece.pos == head_pos) {
+            return true;
+        }
+    }
+
+    return false;
 }
