@@ -9,9 +9,9 @@
 SnakeGame::SnakeGame() {
     int distance_from_center = 4;
 
-    int init_x = MAX_X / 2 - distance_from_center;
+    int init_x = WIDTH / 2 - distance_from_center;
 
-    int init_y = MAX_Y / 2;
+    int init_y = HEIGHT / 2;
 
     snake = Snake(init_x, init_y, INITIAL_LENGTH);
 
@@ -35,7 +35,7 @@ bool SnakeGame::has_collided() const {
 bool SnakeGame::has_collided_with_walls() const {
     const auto [x, y] = snake.head.pos;
 
-    return x < 0 || x >= MAX_X || y < 0 || y >= MAX_Y;
+    return x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT;
 }
 
 bool SnakeGame::has_collided_with_tail() const {

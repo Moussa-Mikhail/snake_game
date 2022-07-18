@@ -8,9 +8,9 @@
 
 class SnakeGame {
    public:
-    const static int MAX_X = 15;
+    const static int WIDTH = 15;
 
-    const static int MAX_Y = 15;
+    const static int HEIGHT = 15;
 
     const static int INITIAL_LENGTH = 3;
 
