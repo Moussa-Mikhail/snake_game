@@ -29,9 +29,9 @@ Pos SnakeGame::get_fruit_pos() const {
 }
 
 void SnakeGame::update(std::optional<VelDir> dir) {
-    snake.update_head(dir);
-
     snake.update_tail();
+
+    snake.update_head(dir);
 }
 
 bool SnakeGame::has_collided() const {
@@ -41,7 +41,7 @@ bool SnakeGame::has_collided() const {
 bool SnakeGame::has_collided_with_walls() const {
     const auto [x, y] = snake.head.pos;
 
-    return x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT;
+    return x <= 0 || x >= WIDTH || y <= 0 || y >= HEIGHT;
 }
 
 bool SnakeGame::has_collided_with_tail() const {
