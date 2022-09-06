@@ -6,20 +6,26 @@
 #include <string>
 #include <vector>
 
-SnakeGame::SnakeGame() {
-    int distance_from_center = 4;
-
-    int init_x = WIDTH / 2 - distance_from_center;
-
-    int init_y = HEIGHT / 2;
-
-    snake = Snake(init_x, init_y, INITIAL_LENGTH);
-
-    fruit = Fruit(init_x + 2 * distance_from_center, init_y);
-}
-
 int SnakeGame::get_score() const {
     return snake.get_length() - INITIAL_LENGTH;
+}
+
+Pos SnakeGame::get_head_pos() const {
+    return snake.head.pos;
+}
+
+std::vector<Pos> SnakeGame::get_tail_pos() const {
+    std::vector<Pos> tail_pos;
+
+    for (const auto &piece : snake.tail) {
+        tail_pos.push_back(piece.pos);
+    }
+
+    return tail_pos;
+}
+
+Pos SnakeGame::get_fruit_pos() const {
+    return fruit.pos;
 }
 
 void SnakeGame::update(std::optional<VelDir> dir) {
