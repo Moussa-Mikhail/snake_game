@@ -16,8 +16,6 @@ void setCursorPosition(int x, int y) {
 }
 
 void Display::clear_screen(char fill) {
-    COORD tl = {0, 0};
-
     CONSOLE_SCREEN_BUFFER_INFO s;
 
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -25,6 +23,8 @@ void Display::clear_screen(char fill) {
     GetConsoleScreenBufferInfo(console, &s);
 
     DWORD written, cells = s.dwSize.X * s.dwSize.Y;
+
+    COORD tl = {0, 0};
 
     FillConsoleOutputCharacter(console, fill, cells, tl, &written);
 
