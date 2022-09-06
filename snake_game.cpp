@@ -41,7 +41,7 @@ bool SnakeGame::has_collided() const {
 bool SnakeGame::has_collided_with_walls() const {
     const auto [x, y] = snake.head.pos;
 
-    return x <= 0 || x >= WIDTH || y <= 0 || y >= HEIGHT;
+    return x <= 0 || x >= (WIDTH - 1) || y <= 0 || y >= (HEIGHT - 1);
 }
 
 bool SnakeGame::has_collided_with_tail() const {
