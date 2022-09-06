@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -g -O0 -std=c++17 -Wall
 LDFLAGS=-static -static-libstdc++ -static-libgcc
-SOURCES=main.cpp snake_game.cpp snake_game_objects.cpp
+SOURCES=main.cpp snake_game.cpp snake_game_objects.cpp display.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=snake
 
@@ -14,4 +14,4 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	del -f $(EXECUTABLE).exe $(OBJECTS)
+	rm -f $(EXECUTABLE).exe $(OBJECTS)
