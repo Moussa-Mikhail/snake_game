@@ -19,9 +19,11 @@ const int MILLISECS_PER_SECONDS = std::pow(10, 3);
 const auto MILLISECS_PER_UPDATES = std::chrono::milliseconds(MILLISECS_PER_SECONDS / UPDATES_PER_SECOND);
 
 int main() {
-    SnakeGame game;
+    SnakeGame game(30, 15);
 
-    DisplayInterface *base_display = &Display(game);
+    Display display(game);
+
+    DisplayInterface *base_display = &display;
 
     base_display->clear_screen();
 
