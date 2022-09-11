@@ -6,7 +6,7 @@
 
 #include "snake_game_objects.h"
 
-class SnakeGame {
+class SnakeGameModel {
    public:
     const int WIDTH;
 
@@ -14,7 +14,7 @@ class SnakeGame {
 
     const int INITIAL_LENGTH = 3;
 
-    SnakeGame(int width = 15, int height = 15, int length = 3) : WIDTH(width), HEIGHT(height), INITIAL_LENGTH(length) {
+    SnakeGameModel(int width = 15, int height = 15, int length = 3) : WIDTH(width), HEIGHT(height), INITIAL_LENGTH(length) {
         int distance_from_center = 4;
 
         int init_x = WIDTH / 2 - distance_from_center;

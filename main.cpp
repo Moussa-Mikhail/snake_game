@@ -19,7 +19,7 @@ const int MILLISECS_PER_SECONDS = std::pow(10, 3);
 const auto MILLISECS_PER_UPDATES = std::chrono::milliseconds((int)(MILLISECS_PER_SECONDS / UPDATES_PER_SECOND));
 
 int main() {
-    SnakeGame game(30, 15);
+    SnakeGameModel game(30, 15);
 
     Display display(game);
 

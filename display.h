@@ -6,9 +6,9 @@
 
 class Display : public DisplayInterface {
    public:
-    Display(const SnakeGame& game) : game{game}, WIDTH(game.WIDTH), HEIGHT(game.HEIGHT){};
+    Display(const SnakeGameModel& game) : game{game}, WIDTH(game.WIDTH), HEIGHT(game.HEIGHT){};
 
-    const SnakeGame& game;
+    const SnakeGameModel& game;
 
     const int WIDTH;
 
