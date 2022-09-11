@@ -12,11 +12,11 @@
 
 std::optional<VelDir> get_dir();
 
-const int UPDATES_PER_SECOND = 1;
+const auto UPDATES_PER_SECOND = 0.5;
 
 const int MILLISECS_PER_SECONDS = std::pow(10, 3);
 
-const auto MILLISECS_PER_UPDATES = std::chrono::milliseconds(MILLISECS_PER_SECONDS / UPDATES_PER_SECOND);
+const auto MILLISECS_PER_UPDATES = std::chrono::milliseconds((int)(MILLISECS_PER_SECONDS / UPDATES_PER_SECOND));
 
 int main() {
     SnakeGame game(30, 15);
@@ -50,9 +50,7 @@ int main() {
 
         base_display->draw_game();
 
-        std::optional<VelDir> dir = get_dir();
-
-        game.update(dir);
+        game.update(get_dir());
     }
 
     base_display->draw_game_over();
