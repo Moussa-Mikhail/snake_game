@@ -6,7 +6,9 @@
 
 class Display : public DisplayInterface {
    public:
-    Display(const SnakeGameModel &game) : game{game}, WIDTH(game.WIDTH), HEIGHT(game.HEIGHT){};
+    explicit Display(const SnakeGameModel &game) : game{game}, WIDTH(game.WIDTH), HEIGHT(game.HEIGHT) {
+        set_VT_mode();
+    };
 
     const SnakeGameModel &game;
 
@@ -18,27 +20,34 @@ class Display : public DisplayInterface {
 
     void draw_snake() override;
 
-    void draw_snake_(const wchar_t *head, const wchar_t *tail);
-
-    void clear_snake();
-
-    void draw_food() override;
-
-    void draw_food_(const wchar_t *food);
-
-    void clear_food();
-
-    void draw_score() override;
-
     void draw_game() override;
 
-    void clear_game() override;
+    void move_tail() override;
 
     void draw_game_over() override;
 
     void draw_welcome_message() override;
 
-    void clear_screen();
+    void clear_screen() override;
+
+   private:
+    static void set_VT_mode();
+
+    void draw_snake_(const wchar_t *head, const wchar_t *tail) const;
+
+    void draw_food_(const wchar_t *food) const;
+
+    void redraw_snake() const;
+
+    void redraw_head() const;
+
+    void clear_tail() const;
+
+    void draw_food() const;
+
+    void clear_food() const;
+
+    void draw_score() const;
 
     // colors
     static const wchar_t *RED;

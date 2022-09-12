@@ -40,7 +40,7 @@ struct SnakePiece {
 
     SnakePiece() = default;
 
-    SnakePiece(int x, int y);
+    SnakePiece(int x, int y) : pos(x, y){};
 };
 
 struct Head : SnakePiece {
@@ -61,15 +61,23 @@ class Snake {
 
     Snake() = default;
 
-    Snake(int init_x, int init_y, int init_length);
+    Snake(int init_x, int init_y, int init_length) : head(init_x, init_y) {
+        tail.resize(init_length);
+
+        for (int i = 0; i < init_length; i++) {
+            tail[i] = SnakePiece(init_x - 1, init_y);
+        }
+    };
 
     void update(std::optional<VelDir> dir);
 
-    int get_length() const;
+    auto get_length() const;
 
     bool has_collided_with_tail() const;
 
     void grow_tail();
+
+    bool is_moving() const;
 
    private:
     void update_head(std::optional<VelDir> dir);
@@ -82,6 +90,6 @@ struct Food {
 
     Food() = default;
 
-    Food(int x, int y);
+    Food(int x, int y) : pos(x, y){};
 };
 #endif

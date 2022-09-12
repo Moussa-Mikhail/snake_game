@@ -3,6 +3,7 @@
 #include "snake_game_model.h"
 
 #include <iostream>
+#include <random>
 #include <string>
 #include <vector>
 
@@ -33,6 +34,7 @@ void SnakeGameModel::update(std::optional<VelDir> dir) {
 
     if (has_eaten_food()) {
         replace_food();
+
         snake.grow_tail();
     }
 }
@@ -56,8 +58,12 @@ bool SnakeGameModel::has_eaten_food() const {
 }
 
 void SnakeGameModel::replace_food() {
-    auto x = rand() % (WIDTH - 2) + 1;
-    auto y = rand() % (HEIGHT - 2) + 1;
+    std::default_random_engine generator;
+    std::uniform_int_distribution distribution(1, WIDTH - 2);
+
+    auto x = distribution(generator);
+
+    auto y = distribution(generator);
 
     food = Food(x, y);
 }

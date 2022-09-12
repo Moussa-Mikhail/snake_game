@@ -47,6 +47,18 @@ const wchar_t *Display::FOOD = L"F";
 
 const wchar_t *Display::FOOD_COLOR = Display::YELLOW;
 
+void Display::set_VT_mode() {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    DWORD dwMode = 0;
+
+    GetConsoleMode(hOut, &dwMode);
+
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+
+    SetConsoleMode(hOut, dwMode);
+}
+
 void Display::clear_screen() {
     CONSOLE_SCREEN_BUFFER_INFO s;
 
@@ -54,7 +66,9 @@ void Display::clear_screen() {
 
     GetConsoleScreenBufferInfo(console, &s);
 
-    DWORD written, cells = s.dwSize.X * s.dwSize.Y;
+    DWORD written = s.dwSize.X * s.dwSize.Y;
+
+    DWORD cells = s.dwSize.X * s.dwSize.Y;
 
     COORD tl = {0, 0};
 
@@ -87,7 +101,7 @@ void Display::draw_walls() {
     }
 }
 
-void Display::draw_snake_(const wchar_t *head = HEAD, const wchar_t *tail = TAIL) {
+void Display::draw_snake_(const wchar_t *head = HEAD, const wchar_t *tail = TAIL) const {
     setCursorPosition(game.get_head_pos());
 
     std::wcout << HEAD_COLOR << head << DEFAULT;
@@ -101,7 +115,7 @@ void Display::draw_snake_(const wchar_t *head = HEAD, const wchar_t *tail = TAIL
     }
 }
 
-void Display::clear_snake() {
+void Display::clear_tail() const {
     auto last_piece_pos = game.get_tail_pos().back();
 
     setCursorPosition(last_piece_pos);
@@ -113,21 +127,31 @@ void Display::draw_snake() {
     draw_snake_();
 }
 
-void Display::draw_food_(const wchar_t *food = FOOD) {
+void Display::redraw_snake() const {
+    redraw_head();
+}
+
+void Display::redraw_head() const {
+    setCursorPosition(game.get_head_pos());
+
+    std::wcout << HEAD_COLOR << HEAD << DEFAULT;
+}
+
+void Display::draw_food_(const wchar_t *food = FOOD) const {
     setCursorPosition(game.get_food_pos());
 
     std::wcout << FOOD_COLOR << food << DEFAULT;
 }
 
-void Display::clear_food() {
+void Display::clear_food() const {
     draw_food_(L" ");
 }
 
-void Display::draw_food() {
-    draw_food_();
+void Display::draw_food() const {
+    draw_food_(FOOD);
 }
 
-void Display::draw_score() {
+void Display::draw_score() const {
     setCursorPosition(0, HEIGHT + 1);
 
     std::cout << "Score: " << game.get_score();
@@ -135,24 +159,30 @@ void Display::draw_score() {
 
 void Display::draw_game() {
     draw_food();
-    draw_snake();
+    redraw_snake();
     draw_score();
 }
 
-void Display::clear_game() {
-    clear_snake();
+void Display::move_tail() {
+    clear_tail();
+
+    const auto head_pos = game.get_head_pos();
+
+    setCursorPosition(head_pos);
+
+    std::wcout << TAIL_COLOR << TAIL << DEFAULT;
 }
 
 void Display::draw_game_over() {
     std::string game_over = "Game Over";
 
-    setCursorPosition(WIDTH / 2 - game_over.length() / 2, HEIGHT / 2);
+    setCursorPosition(WIDTH / 2 - (int)game_over.length() / 2, HEIGHT / 2);
 
     std::cout << game_over;
 
     std::string exit_message = "Press enter to exit.";
 
-    setCursorPosition(WIDTH / 2 - exit_message.length() / 2, HEIGHT / 2 + 1);
+    setCursorPosition(WIDTH / 2 - (int)exit_message.length() / 2, HEIGHT / 2 + 1);
 
     std::cout << exit_message;
 }
@@ -160,13 +190,13 @@ void Display::draw_game_over() {
 void Display::draw_welcome_message() {
     std::string welcome = "Welcome to Snake";
 
-    setCursorPosition(WIDTH / 2 - welcome.length() / 2, HEIGHT / 2);
+    setCursorPosition(WIDTH / 2 - (int)welcome.length() / 2, HEIGHT / 2);
 
     std::cout << welcome;
 
     std::string start_message = "Press enter to start.";
 
-    setCursorPosition(WIDTH / 2 - start_message.length() / 2, HEIGHT / 2 + 1);
+    setCursorPosition(WIDTH / 2 - (int)start_message.length() / 2, HEIGHT / 2 + 1);
 
     std::cout << start_message;
 }
