@@ -1,6 +1,6 @@
 // Implementation file for SnakeGame class
 
-#include "snake_game.h"
+#include "snake_game_model.h"
 
 #include <iostream>
 #include <string>

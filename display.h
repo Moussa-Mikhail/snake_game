@@ -2,7 +2,7 @@
 #define SNAKE_DISPLAY_H
 
 #include "display_interface.h"
-#include "snake_game.h"
+#include "snake_game_model.h"
 
 class Display : public DisplayInterface {
    public:

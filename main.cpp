@@ -8,7 +8,7 @@
 
 #include "display.h"
 #include "display_interface.h"
-#include "snake_game.h"
+#include "snake_game_model.h"
 
 std::optional<VelDir> get_dir();
 
