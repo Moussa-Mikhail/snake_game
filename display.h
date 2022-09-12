@@ -18,11 +18,21 @@ class Display : public DisplayInterface {
 
     void draw_snake() override;
 
+    void draw_snake_(const char head, const char tail);
+
+    void clear_snake();
+
     void draw_fruit() override;
+
+    void draw_fruit_(const char fruit);
+
+    void clear_fruit();
 
     void draw_score() override;
 
     void draw_game() override;
+
+    void clear_game() override;
 
     void draw_game_over() override;
 

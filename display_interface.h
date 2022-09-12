@@ -17,6 +17,8 @@ class DisplayInterface {
 
     virtual void draw_game() = 0;
 
+    virtual void clear_game() = 0;
+
     virtual void draw_game_over() = 0;
 
     virtual void draw_welcome_message() = 0;

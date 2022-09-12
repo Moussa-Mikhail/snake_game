@@ -37,6 +37,10 @@ int main() {
 
     auto last_time = now;
 
+    base_display->clear_screen();
+
+    base_display->draw_walls();
+
     while (!game.has_collided()) {
         now = std::chrono::steady_clock::now();
 
@@ -48,9 +52,11 @@ int main() {
             std::this_thread::sleep_for(MILLISECS_PER_UPDATES - delta_time);
         }
 
-        base_display->draw_game();
+        base_display->clear_game();
 
         game.update(get_dir());
+
+        base_display->draw_game();
     }
 
     base_display->draw_game_over();

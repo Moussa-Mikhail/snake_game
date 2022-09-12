@@ -61,24 +61,40 @@ void Display::draw_walls() {
     }
 }
 
-void Display::draw_snake() {
+void Display::draw_snake_(const char head = HEAD, const char tail = TAIL) {
     setCursorPosition(game.get_head_pos());
 
-    std::cout << HEAD;
+    std::cout << head;
 
     auto tail_pos = game.get_tail_pos();
 
     for (const auto pos : tail_pos) {
         setCursorPosition(pos);
 
-        std::cout << TAIL;
+        std::cout << tail;
     }
 }
 
-void Display::draw_fruit() {
+void Display::clear_snake() {
+    draw_snake_(' ', ' ');
+}
+
+void Display::draw_snake() {
+    draw_snake_();
+}
+
+void Display::draw_fruit_(const char fruit = FRUIT) {
     setCursorPosition(game.get_fruit_pos());
 
-    std::cout << FRUIT;
+    std::cout << fruit;
+}
+
+void Display::clear_fruit() {
+    draw_fruit_(' ');
+}
+
+void Display::draw_fruit() {
+    draw_fruit_();
 }
 
 void Display::draw_score() {
@@ -88,11 +104,13 @@ void Display::draw_score() {
 }
 
 void Display::draw_game() {
-    clear_screen();
-    draw_walls();
-    draw_snake();
     draw_fruit();
+    draw_snake();
     draw_score();
+}
+
+void Display::clear_game() {
+    clear_snake();
 }
 
 void Display::draw_game_over() {
