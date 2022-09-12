@@ -102,7 +102,11 @@ void Display::draw_snake_(const wchar_t *head = HEAD, const wchar_t *tail = TAIL
 }
 
 void Display::clear_snake() {
-    draw_snake_(L" ", L" ");
+    auto last_piece_pos = game.get_tail_pos().back();
+
+    setCursorPosition(last_piece_pos);
+
+    std::wcout << L" ";
 }
 
 void Display::draw_snake() {
