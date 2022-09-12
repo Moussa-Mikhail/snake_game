@@ -77,11 +77,11 @@ class Snake {
     void update_tail();
 };
 
-struct Fruit {
+struct Food {
     Pos pos;
 
-    Fruit() = default;
+    Food() = default;
 
-    Fruit(int x, int y);
+    Food(int x, int y);
 };
 #endif

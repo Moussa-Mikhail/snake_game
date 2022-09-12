@@ -24,15 +24,15 @@ std::vector<Pos> SnakeGameModel::get_tail_pos() const {
     return tail_pos;
 }
 
-Pos SnakeGameModel::get_fruit_pos() const {
-    return fruit.pos;
+Pos SnakeGameModel::get_food_pos() const {
+    return food.pos;
 }
 
 void SnakeGameModel::update(std::optional<VelDir> dir) {
     snake.update(dir);
 
-    if (has_eaten_fruit()) {
-        replace_fruit();
+    if (has_eaten_food()) {
+        replace_food();
         snake.grow_tail();
     }
 }
@@ -51,13 +51,13 @@ bool SnakeGameModel::has_collided_with_tail() const {
     return snake.has_collided_with_tail();
 }
 
-bool SnakeGameModel::has_eaten_fruit() const {
-    return snake.head.pos == fruit.pos;
+bool SnakeGameModel::has_eaten_food() const {
+    return snake.head.pos == food.pos;
 }
 
-void SnakeGameModel::replace_fruit() {
+void SnakeGameModel::replace_food() {
     auto x = rand() % (WIDTH - 2) + 1;
     auto y = rand() % (HEIGHT - 2) + 1;
 
-    fruit = Fruit(x, y);
+    food = Food(x, y);
 }

@@ -22,11 +22,11 @@ class Display : public DisplayInterface {
 
     void clear_snake();
 
-    void draw_fruit() override;
+    void draw_food() override;
 
-    void draw_fruit_(const char fruit);
+    void draw_food_(const char food);
 
-    void clear_fruit();
+    void clear_food();
 
     void draw_score() override;
 
@@ -47,7 +47,7 @@ class Display : public DisplayInterface {
 
     const static char TAIL = 'T';
 
-    const static char FRUIT = 'F';
+    const static char FOOD = 'F';
 };
 
 #endif

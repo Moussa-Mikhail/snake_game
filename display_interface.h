@@ -11,7 +11,7 @@ class DisplayInterface {
 
     virtual void draw_snake() = 0;
 
-    virtual void draw_fruit() = 0;
+    virtual void draw_food() = 0;
 
     virtual void draw_score() = 0;
 

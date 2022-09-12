@@ -23,7 +23,7 @@ class SnakeGameModel {
 
         snake = Snake(init_x, init_y, INITIAL_LENGTH);
 
-        fruit = Fruit(init_x + 2 * distance_from_center, init_y);
+        food = Food(init_x + 2 * distance_from_center, init_y);
     };
 
     void update(std::optional<VelDir> dir);
@@ -34,7 +34,7 @@ class SnakeGameModel {
 
     std::vector<Pos> get_tail_pos() const;
 
-    Pos get_fruit_pos() const;
+    Pos get_food_pos() const;
 
     bool has_collided() const;
 
@@ -42,13 +42,13 @@ class SnakeGameModel {
 
     bool has_collided_with_tail() const;
 
-    bool has_eaten_fruit() const;
+    bool has_eaten_food() const;
 
    private:
     Snake snake;
 
-    Fruit fruit;
+    Food food;
 
-    void replace_fruit();
+    void replace_food();
 };
 #endif

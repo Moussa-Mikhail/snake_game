@@ -83,18 +83,18 @@ void Display::draw_snake() {
     draw_snake_();
 }
 
-void Display::draw_fruit_(const char fruit = FRUIT) {
-    setCursorPosition(game.get_fruit_pos());
+void Display::draw_food_(const char food = FOOD) {
+    setCursorPosition(game.get_food_pos());
 
-    std::cout << fruit;
+    std::cout << food;
 }
 
-void Display::clear_fruit() {
-    draw_fruit_(' ');
+void Display::clear_food() {
+    draw_food_(' ');
 }
 
-void Display::draw_fruit() {
-    draw_fruit_();
+void Display::draw_food() {
+    draw_food_();
 }
 
 void Display::draw_score() {
@@ -104,7 +104,7 @@ void Display::draw_score() {
 }
 
 void Display::draw_game() {
-    draw_fruit();
+    draw_food();
     draw_snake();
     draw_score();
 }
