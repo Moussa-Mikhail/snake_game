@@ -67,3 +67,7 @@ void SnakeGameModel::replace_food() {
 
     food = Food(x, y);
 }
+
+bool SnakeGameModel::is_snake_moving() const {
+    return snake.is_moving();
+}

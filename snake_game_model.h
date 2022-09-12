@@ -44,6 +44,8 @@ class SnakeGameModel {
 
     bool has_eaten_food() const;
 
+    bool is_snake_moving() const;
+
    private:
     Snake snake;
 
