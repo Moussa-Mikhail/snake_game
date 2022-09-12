@@ -12,7 +12,7 @@
 
 std::optional<VelDir> get_dir();
 
-const auto UPDATES_PER_SECOND = 0.5;
+const auto UPDATES_PER_SECOND = 2;
 
 const int MILLISECS_PER_SECONDS = std::pow(10, 3);
 
