@@ -15,6 +15,20 @@ void setCursorPosition(int x, int y) {
     SetConsoleCursorPosition(hOut, coord);
 }
 
+void setCursorPosition(Pos pos) {
+    auto [x, y] = pos;
+
+    setCursorPosition(x, y);
+}
+
+const std::string Display::WALL = "W";
+
+const std::string Display::HEAD = "H";
+
+const std::string Display::TAIL = "T";
+
+const std::string Display::FOOD = "F";
+
 void Display::clear_screen() {
     CONSOLE_SCREEN_BUFFER_INFO s;
 
@@ -33,12 +47,6 @@ void Display::clear_screen() {
     SetConsoleCursorPosition(console, tl);
 }
 
-void setCursorPosition(Pos pos) {
-    auto [x, y] = pos;
-
-    setCursorPosition(x, y);
-}
-
 void Display::draw_walls() {
     for (int i = 0; i < WIDTH; i++) {
         setCursorPosition(i, 0);
@@ -50,18 +58,18 @@ void Display::draw_walls() {
         std::cout << WALL;
     }
 
-    for (int i = 1; i < HEIGHT - 1; i++) {
-        setCursorPosition(0, i);
+    for (int j = 1; j < HEIGHT - 1; j++) {
+        setCursorPosition(0, j);
 
         std::cout << WALL;
 
-        setCursorPosition(WIDTH - 1, i);
+        setCursorPosition(WIDTH - 1, j);
 
         std::cout << WALL;
     }
 }
 
-void Display::draw_snake_(const char head = HEAD, const char tail = TAIL) {
+void Display::draw_snake_(const std::string head = HEAD, const std::string tail = TAIL) {
     setCursorPosition(game.get_head_pos());
 
     std::cout << head;
@@ -76,21 +84,21 @@ void Display::draw_snake_(const char head = HEAD, const char tail = TAIL) {
 }
 
 void Display::clear_snake() {
-    draw_snake_(' ', ' ');
+    draw_snake_(" ", " ");
 }
 
 void Display::draw_snake() {
     draw_snake_();
 }
 
-void Display::draw_food_(const char food = FOOD) {
+void Display::draw_food_(const std::string food = FOOD) {
     setCursorPosition(game.get_food_pos());
 
     std::cout << food;
 }
 
 void Display::clear_food() {
-    draw_food_(' ');
+    draw_food_(" ");
 }
 
 void Display::draw_food() {

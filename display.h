@@ -6,9 +6,9 @@
 
 class Display : public DisplayInterface {
    public:
-    Display(const SnakeGameModel& game) : game{game}, WIDTH(game.WIDTH), HEIGHT(game.HEIGHT){};
+    Display(const SnakeGameModel &game) : game{game}, WIDTH(game.WIDTH), HEIGHT(game.HEIGHT){};
 
-    const SnakeGameModel& game;
+    const SnakeGameModel &game;
 
     const int WIDTH;
 
@@ -18,13 +18,13 @@ class Display : public DisplayInterface {
 
     void draw_snake() override;
 
-    void draw_snake_(const char head, const char tail);
+    void draw_snake_(const std::string head, const std::string tail);
 
     void clear_snake();
 
     void draw_food() override;
 
-    void draw_food_(const char food);
+    void draw_food_(const std::string food);
 
     void clear_food();
 
@@ -41,13 +41,13 @@ class Display : public DisplayInterface {
     void clear_screen();
 
     // draw symbols
-    const static char WALL = 'W';
+    static const std::string WALL;
 
-    const static char HEAD = 'H';
+    static const std::string HEAD;
 
-    const static char TAIL = 'T';
+    static const std::string TAIL;
 
-    const static char FOOD = 'F';
+    static const std::string FOOD;
 };
 
 #endif
