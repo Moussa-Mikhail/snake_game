@@ -69,8 +69,6 @@ class Snake {
 
     bool has_collided_with_tail() const;
 
-    void update(std::optional<VelDir> dir);
-
    private:
     void update_head(std::optional<VelDir> dir);
 
