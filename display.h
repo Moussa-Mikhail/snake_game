@@ -38,7 +38,7 @@ class Display : public DisplayInterface {
 
     void draw_welcome_message() override;
 
-    void clear_screen(char fill = ' ');
+    void clear_screen();
 
     // draw symbols
     const static char WALL = 'W';

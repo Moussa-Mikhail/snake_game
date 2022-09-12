@@ -23,7 +23,7 @@ class DisplayInterface {
 
     virtual void draw_welcome_message() = 0;
 
-    virtual void clear_screen(char fill = ' ') = 0;
+    virtual void clear_screen() = 0;
 };
 
 #endif

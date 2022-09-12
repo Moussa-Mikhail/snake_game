@@ -15,7 +15,7 @@ void setCursorPosition(int x, int y) {
     SetConsoleCursorPosition(hOut, coord);
 }
 
-void Display::clear_screen(char fill) {
+void Display::clear_screen() {
     CONSOLE_SCREEN_BUFFER_INFO s;
 
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -26,7 +26,7 @@ void Display::clear_screen(char fill) {
 
     COORD tl = {0, 0};
 
-    FillConsoleOutputCharacter(console, fill, cells, tl, &written);
+    FillConsoleOutputCharacter(console, ' ', cells, tl, &written);
 
     FillConsoleOutputAttribute(console, s.wAttributes, cells, tl, &written);
 
