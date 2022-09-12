@@ -21,13 +21,31 @@ void setCursorPosition(Pos pos) {
     setCursorPosition(x, y);
 }
 
-const std::string Display::WALL = "W";
+const wchar_t *Display::RED = L"\x1b[31m";
 
-const std::string Display::HEAD = "H";
+const wchar_t *Display::WHITE = L"\x1b[37m";
 
-const std::string Display::TAIL = "T";
+const wchar_t *Display::GREEN = L"\x1b[32m";
 
-const std::string Display::FOOD = "F";
+const wchar_t *Display::YELLOW = L"\x1b[33m";
+
+const wchar_t *Display::DEFAULT = L"\x1b[0m";
+
+const wchar_t *Display::WALL = L"X";
+
+const wchar_t *Display::WALL_COLOR = Display::RED;
+
+const wchar_t *Display::HEAD = L"H";
+
+const wchar_t *Display::HEAD_COLOR = Display::WHITE;
+
+const wchar_t *Display::TAIL = L"T";
+
+const wchar_t *Display::TAIL_COLOR = Display::GREEN;
+
+const wchar_t *Display::FOOD = L"F";
+
+const wchar_t *Display::FOOD_COLOR = Display::YELLOW;
 
 void Display::clear_screen() {
     CONSOLE_SCREEN_BUFFER_INFO s;
@@ -51,54 +69,54 @@ void Display::draw_walls() {
     for (int i = 0; i < WIDTH; i++) {
         setCursorPosition(i, 0);
 
-        std::cout << WALL;
+        std::wcout << WALL_COLOR << WALL << DEFAULT;
 
         setCursorPosition(i, HEIGHT - 1);
 
-        std::cout << WALL;
+        std::wcout << WALL_COLOR << WALL << DEFAULT;
     }
 
     for (int j = 1; j < HEIGHT - 1; j++) {
         setCursorPosition(0, j);
 
-        std::cout << WALL;
+        std::wcout << WALL_COLOR << WALL << DEFAULT;
 
         setCursorPosition(WIDTH - 1, j);
 
-        std::cout << WALL;
+        std::wcout << WALL_COLOR << WALL << DEFAULT;
     }
 }
 
-void Display::draw_snake_(const std::string head = HEAD, const std::string tail = TAIL) {
+void Display::draw_snake_(const wchar_t *head = HEAD, const wchar_t *tail = TAIL) {
     setCursorPosition(game.get_head_pos());
 
-    std::cout << head;
+    std::wcout << HEAD_COLOR << head << DEFAULT;
 
     auto tail_pos = game.get_tail_pos();
 
     for (const auto pos : tail_pos) {
         setCursorPosition(pos);
 
-        std::cout << tail;
+        std::wcout << TAIL_COLOR << tail << DEFAULT;
     }
 }
 
 void Display::clear_snake() {
-    draw_snake_(" ", " ");
+    draw_snake_(L" ", L" ");
 }
 
 void Display::draw_snake() {
     draw_snake_();
 }
 
-void Display::draw_food_(const std::string food = FOOD) {
+void Display::draw_food_(const wchar_t *food = FOOD) {
     setCursorPosition(game.get_food_pos());
 
-    std::cout << food;
+    std::wcout << FOOD_COLOR << food << DEFAULT;
 }
 
 void Display::clear_food() {
-    draw_food_(" ");
+    draw_food_(L" ");
 }
 
 void Display::draw_food() {

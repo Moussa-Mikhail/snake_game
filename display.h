@@ -18,13 +18,13 @@ class Display : public DisplayInterface {
 
     void draw_snake() override;
 
-    void draw_snake_(const std::string head, const std::string tail);
+    void draw_snake_(const wchar_t *head, const wchar_t *tail);
 
     void clear_snake();
 
     void draw_food() override;
 
-    void draw_food_(const std::string food);
+    void draw_food_(const wchar_t *food);
 
     void clear_food();
 
@@ -40,14 +40,33 @@ class Display : public DisplayInterface {
 
     void clear_screen();
 
-    // draw symbols
-    static const std::string WALL;
+    // colors
+    static const wchar_t *RED;
 
-    static const std::string HEAD;
+    static const wchar_t *WHITE;
 
-    static const std::string TAIL;
+    static const wchar_t *GREEN;
 
-    static const std::string FOOD;
+    static const wchar_t *YELLOW;
+
+    static const wchar_t *DEFAULT;
+
+    // draw chars
+    static const wchar_t *WALL;
+
+    static const wchar_t *HEAD;
+
+    static const wchar_t *TAIL;
+
+    static const wchar_t *FOOD;
+
+    static const wchar_t *WALL_COLOR;
+
+    static const wchar_t *HEAD_COLOR;
+
+    static const wchar_t *TAIL_COLOR;
+
+    static const wchar_t *FOOD_COLOR;
 };
 
 #endif

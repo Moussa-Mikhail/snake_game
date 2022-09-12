@@ -12,13 +12,28 @@
 
 std::optional<VelDir> get_dir();
 
-const auto UPDATES_PER_SECOND = 2;
+const auto UPDATES_PER_SECOND = 1;
 
 const int MILLISECS_PER_SECONDS = std::pow(10, 3);
 
 const auto MILLISECS_PER_UPDATES = std::chrono::milliseconds((int)(MILLISECS_PER_SECONDS / UPDATES_PER_SECOND));
 
 int main() {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (hOut == INVALID_HANDLE_VALUE) {
+        return GetLastError();
+    }
+
+    DWORD dwMode = 0;
+    if (!GetConsoleMode(hOut, &dwMode)) {
+        return GetLastError();
+    }
+
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    if (!SetConsoleMode(hOut, dwMode)) {
+        return GetLastError();
+    }
+
     SnakeGameModel game(30, 15);
 
     Display display(game);
