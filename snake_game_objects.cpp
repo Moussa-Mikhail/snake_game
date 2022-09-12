@@ -49,7 +49,7 @@ void Head::update_pos() {
     pos += vel;
 }
 
-auto Snake::get_length() const { return tail.size(); };
+int Snake::get_length() const { return (int)tail.size(); };
 
 void Snake::update_head(std::optional<VelDir> dir) {
     head.update_dir(dir);
@@ -76,7 +76,7 @@ void Snake::update(std::optional<VelDir> dir) {
 bool Snake::is_moving() const { return !(head.vel == Vel(0, 0)); }
 
 bool Snake::has_collided_with_tail() const {
-    std::any_of(tail.begin(), tail.end(), [](const auto &tail_piece) {
+    std::any_of(tail.begin(), tail.end(), [this](const auto &tail_piece) {
         return tail_piece.pos == head.pos;
     });
 

@@ -71,7 +71,7 @@ class Snake {
 
     void update(std::optional<VelDir> dir);
 
-    auto get_length() const;
+    int get_length() const;
 
     bool has_collided_with_tail() const;
 
