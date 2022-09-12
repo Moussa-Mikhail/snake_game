@@ -41,7 +41,7 @@ class Display : public DisplayInterface {
 
     void redraw_head() const;
 
-    void clear_tail() const;
+    void clear_last_piece() const;
 
     void draw_food() const;
 
