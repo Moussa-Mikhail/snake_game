@@ -30,6 +30,11 @@ Pos SnakeGameModel::get_fruit_pos() const {
 
 void SnakeGameModel::update(std::optional<VelDir> dir) {
     snake.update(dir);
+
+    if (has_eaten_fruit()) {
+        replace_fruit();
+        snake.grow_tail();
+    }
 }
 
 bool SnakeGameModel::has_collided() const {
@@ -44,4 +49,15 @@ bool SnakeGameModel::has_collided_with_walls() const {
 
 bool SnakeGameModel::has_collided_with_tail() const {
     return snake.has_collided_with_tail();
+}
+
+bool SnakeGameModel::has_eaten_fruit() const {
+    return snake.head.pos == fruit.pos;
+}
+
+void SnakeGameModel::replace_fruit() {
+    auto x = rand() % (WIDTH - 2) + 1;
+    auto y = rand() % (HEIGHT - 2) + 1;
+
+    fruit = Fruit(x, y);
 }

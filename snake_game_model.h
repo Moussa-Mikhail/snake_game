@@ -42,9 +42,13 @@ class SnakeGameModel {
 
     bool has_collided_with_tail() const;
 
+    bool has_eaten_fruit() const;
+
    private:
     Snake snake;
 
     Fruit fruit;
+
+    void replace_fruit();
 };
 #endif

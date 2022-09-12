@@ -105,3 +105,21 @@ bool Snake::has_collided_with_tail() const {
 
     return false;
 }
+
+void Snake::grow_tail() {
+    auto last_pos = tail.back().pos;
+
+    auto second_to_last_pos = tail[tail.size() - 2].pos;
+
+    auto diff_x = second_to_last_pos.x - last_pos.x;
+
+    auto diff_y = second_to_last_pos.y - last_pos.y;
+
+    auto new_x = last_pos.x - diff_x;
+
+    auto new_y = last_pos.y - diff_y;
+
+    auto new_piece = SnakePiece(new_x, new_y);
+
+    tail.push_back(new_piece);
+}
