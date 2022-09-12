@@ -52,6 +52,10 @@ void Head::update_dir(std::optional<VelDir> dir) {
     }
 }
 
+void Head::update_pos() {
+    pos += vel;
+}
+
 Fruit::Fruit(int x, int y) {
     pos = Pos(x, y);
 }
