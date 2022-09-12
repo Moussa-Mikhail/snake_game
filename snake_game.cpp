@@ -29,9 +29,7 @@ Pos SnakeGameModel::get_fruit_pos() const {
 }
 
 void SnakeGameModel::update(std::optional<VelDir> dir) {
-    snake.update_tail();
-
-    snake.update_head(dir);
+    snake.update(dir);
 }
 
 bool SnakeGameModel::has_collided() const {

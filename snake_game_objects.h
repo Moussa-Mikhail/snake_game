@@ -19,6 +19,8 @@ struct Vel {
     Vel(int x = 0, int y = 0) : x(x), y(y){};
 
     static Vel from_dir(VelDir dir);
+
+    bool operator==(const Vel &rhs) const;
 };
 
 struct Pos {
@@ -55,7 +57,8 @@ struct Head : SnakePiece {
     void update_dir(std::optional<VelDir> dir);
 };
 
-struct Snake {
+class Snake {
+   public:
     Head head;
 
     std::vector<SnakePiece> tail;
@@ -64,13 +67,16 @@ struct Snake {
 
     Snake(int init_x, int init_y, int init_length);
 
+    void update(std::optional<VelDir> dir);
+
     int get_length() const;
 
+    bool has_collided_with_tail() const;
+
+   private:
     void update_head(std::optional<VelDir> dir);
 
     void update_tail();
-
-    bool has_collided_with_tail() const;
 };
 
 struct Fruit {

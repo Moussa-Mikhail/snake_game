@@ -26,6 +26,10 @@ Vel Vel::from_dir(VelDir dir) {
     }
 }
 
+bool Vel::operator==(const Vel &rhs) const {
+    return x == rhs.x && y == rhs.y;
+}
+
 Pos &Pos::operator+=(const Vel &vel) {
     x += vel.x;
 
@@ -86,14 +90,20 @@ void Snake::update_head(std::optional<VelDir> dir) {
 
 void Snake::update_tail() {
     for (int i = tail.size() - 1; i > 0; i--) {
-        tail[i].update_pos();
-
-        tail[i].vel = tail[i - 1].vel;
+        tail[i].pos = tail[i - 1].pos;
     }
 
-    tail[0].update_pos();
+    tail[0].pos = head.pos;
+}
 
-    tail[0].vel = head.vel;
+void Snake::update(std::optional<VelDir> dir) {
+    if (head.vel == Vel(0, 0) && !dir) {
+        ;
+    } else {
+        update_tail();
+    }
+
+    update_head(dir);
 }
 
 bool Snake::has_collided_with_tail() const {
