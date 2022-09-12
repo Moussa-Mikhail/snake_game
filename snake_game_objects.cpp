@@ -38,26 +38,12 @@ Pos &Pos::operator+=(const Vel &vel) {
     return *this;
 }
 
-Pos &Pos::operator-=(const Vel &vel) {
-    x -= vel.x;
-
-    y -= vel.y;
-
-    return *this;
-}
-
 bool Pos::operator==(const Pos &rhs) const {
     return x == rhs.x && y == rhs.y;
 }
 
 SnakePiece::SnakePiece(int x, int y) {
     pos = Pos(x, y);
-
-    vel = Vel(0, 0);
-}
-
-void SnakePiece::update_pos() {
-    pos += vel;
 }
 
 void Head::update_dir(std::optional<VelDir> dir) {

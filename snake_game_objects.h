@@ -32,27 +32,23 @@ struct Pos {
 
     Pos &operator+=(const Vel &vel);
 
-    Pos &operator-=(const Vel &vel);
-
     bool operator==(const Pos &rhs) const;
 };
 
 struct SnakePiece {
     Pos pos;
 
-    Vel vel;
-
     SnakePiece() = default;
 
     SnakePiece(int x, int y);
-
-    SnakePiece(Pos pos, Vel vel);
-
-    void update_pos();
 };
 
 struct Head : SnakePiece {
     using SnakePiece::SnakePiece;
+
+    Vel vel;
+
+    void update_pos();
 
     void update_dir(std::optional<VelDir> dir);
 };
@@ -72,6 +68,8 @@ class Snake {
     int get_length() const;
 
     bool has_collided_with_tail() const;
+
+    void update(std::optional<VelDir> dir);
 
    private:
     void update_head(std::optional<VelDir> dir);
