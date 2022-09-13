@@ -84,11 +84,9 @@ void Snake::update(std::optional<VelDir> dir) {
 bool Snake::is_moving() const { return !(head.vel == Vel(0, 0)); }
 
 bool Snake::has_collided_with_tail() const {
-    std::any_of(tail.begin(), tail.end(), [this](const auto &tail_piece) {
-        return tail_piece.pos == head.pos;
+    return std::any_of(tail.begin(), tail.end(), [this](const auto &tail_piece) {
+        return tail_piece.pos == this->head.pos;
     });
-
-    return false;
 }
 
 void Snake::grow_tail() {
