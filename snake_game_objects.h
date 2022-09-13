@@ -61,13 +61,7 @@ class Snake {
 
     Snake() = default;
 
-    Snake(int init_x, int init_y, int init_length) : head(init_x, init_y) {
-        tail.resize(init_length);
-
-        for (int i = 0; i < init_length; i++) {
-            tail[i] = SnakePiece(init_x - 1, init_y);
-        }
-    };
+    Snake(int init_x, int init_y, int init_length);
 
     void update(std::optional<VelDir> dir);
 

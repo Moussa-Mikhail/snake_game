@@ -49,6 +49,14 @@ void Head::update_pos() {
     pos += vel;
 }
 
+Snake::Snake(int init_x, int init_y, int init_length) : head(init_x, init_y) {
+    tail.resize(init_length);
+
+    for (int i = 0; i < init_length; i++) {
+        tail[i] = SnakePiece(init_x - i - 1, init_y);
+    }
+};
+
 int Snake::get_length() const { return (int)tail.size(); };
 
 void Snake::update_head(std::optional<VelDir> dir) {
