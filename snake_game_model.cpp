@@ -58,8 +58,8 @@ bool SnakeGameModel::has_eaten_food() const {
 }
 
 void SnakeGameModel::replace_food() {
-    std::default_random_engine generator;
-    std::uniform_int_distribution distribution(1, WIDTH - 2);
+    static std::default_random_engine generator;
+    static std::uniform_int_distribution distribution(1, WIDTH - 2);
 
     auto x = distribution(generator);
 
