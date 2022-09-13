@@ -60,11 +60,13 @@ bool SnakeGameModel::has_eaten_food() const {
 void SnakeGameModel::replace_food() {
     static std::default_random_engine generator{static_cast<long unsigned int>(time(nullptr))};
 
-    static std::uniform_int_distribution distribution(1, WIDTH - 2);
+    static std::uniform_int_distribution distribution_x(1, WIDTH - 2);
 
-    auto x = distribution(generator);
+    static std::uniform_int_distribution distribution_y(1, HEIGHT - 2);
 
-    auto y = distribution(generator);
+    auto x = distribution_x(generator);
+
+    auto y = distribution_y(generator);
 
     food = Food(x, y);
 }
