@@ -47,6 +47,10 @@ const wchar_t *Display::FOOD = L"F";
 
 const wchar_t *Display::FOOD_COLOR = Display::YELLOW;
 
+void Display::set_last_tail_piece_pos() {
+    last_tail_piece_pos = game.get_tail_pos().back();
+}
+
 void Display::set_VT_mode() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -101,54 +105,26 @@ void Display::draw_walls() {
     }
 }
 
-void Display::draw_snake_(const wchar_t *head = HEAD, const wchar_t *tail = TAIL) const {
+void Display::clear_last_piece() {
+    setCursorPosition(last_tail_piece_pos);
+
+    std::wcout << L" ";
+
+    set_last_tail_piece_pos();
+}
+
+void Display::draw_snake() {
     setCursorPosition(game.get_head_pos());
 
-    std::wcout << HEAD_COLOR << head << DEFAULT;
+    std::wcout << HEAD_COLOR << HEAD_COLOR << DEFAULT;
 
     auto tail_pos = game.get_tail_pos();
 
     for (const auto pos : tail_pos) {
         setCursorPosition(pos);
 
-        std::wcout << TAIL_COLOR << tail << DEFAULT;
+        std::wcout << TAIL_COLOR << TAIL << DEFAULT;
     }
-}
-
-void Display::clear_tail() const {
-    auto last_piece_pos = game.get_tail_pos().back();
-
-    setCursorPosition(last_piece_pos);
-
-    std::wcout << L" ";
-}
-
-void Display::draw_snake() {
-    draw_snake_();
-}
-
-void Display::redraw_snake() const {
-    redraw_head();
-}
-
-void Display::redraw_head() const {
-    setCursorPosition(game.get_head_pos());
-
-    std::wcout << HEAD_COLOR << HEAD << DEFAULT;
-}
-
-void Display::draw_food_(const wchar_t *food = FOOD) const {
-    setCursorPosition(game.get_food_pos());
-
-    std::wcout << FOOD_COLOR << food << DEFAULT;
-}
-
-void Display::clear_food() const {
-    draw_food_(L" ");
-}
-
-void Display::draw_food() const {
-    draw_food_(FOOD);
 }
 
 void Display::draw_score() const {
@@ -163,14 +139,36 @@ void Display::draw_game() {
     draw_score();
 }
 
+void Display::redraw_snake() {
+    move_tail();
+
+    redraw_head();
+}
+
 void Display::move_tail() {
-    clear_tail();
+    if (!game.is_snake_moving()) {
+        return;
+    }
 
-    const auto head_pos = game.get_head_pos();
+    clear_last_piece();
 
-    setCursorPosition(head_pos);
+    const auto prev_head_pos = (game.get_tail_pos())[0];
+
+    setCursorPosition(prev_head_pos);
 
     std::wcout << TAIL_COLOR << TAIL << DEFAULT;
+}
+
+void Display::redraw_head() const {
+    setCursorPosition(game.get_head_pos());
+
+    std::wcout << HEAD_COLOR << HEAD << DEFAULT;
+}
+
+void Display::draw_food() const {
+    setCursorPosition(game.get_food_pos());
+
+    std::wcout << FOOD_COLOR << FOOD << DEFAULT;
 }
 
 void Display::draw_game_over() {

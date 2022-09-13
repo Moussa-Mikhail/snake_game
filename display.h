@@ -6,11 +6,11 @@
 
 class Display : public DisplayInterface {
    public:
-    explicit Display(const SnakeGameModel &game) : game{game}, WIDTH(game.WIDTH), HEIGHT(game.HEIGHT) {
+    explicit Display(const SnakeGameModel &game) : WIDTH(game.WIDTH), HEIGHT(game.HEIGHT), game{game} {
         set_VT_mode();
-    };
 
-    const SnakeGameModel &game;
+        set_last_tail_piece_pos();
+    };
 
     const int WIDTH;
 
@@ -31,21 +31,21 @@ class Display : public DisplayInterface {
     void clear_screen() override;
 
    private:
+    const SnakeGameModel &game;
+
+    Pos last_tail_piece_pos;
+
+    void set_last_tail_piece_pos();
+
     static void set_VT_mode();
 
-    void draw_snake_(const wchar_t *head, const wchar_t *tail) const;
-
-    void draw_food_(const wchar_t *food) const;
-
-    void redraw_snake() const;
+    void redraw_snake();
 
     void redraw_head() const;
 
-    void clear_last_piece() const;
+    void clear_last_piece();
 
     void draw_food() const;
-
-    void clear_food() const;
 
     void draw_score() const;
 

@@ -12,6 +12,8 @@
 
 std::optional<VelDir> get_dir();
 
+bool is_key_pressed(int vKey);
+
 const double UPDATES_PER_SECOND = 1;
 
 const int MILLISECS_PER_SECONDS = int(std::pow(10, 3));
@@ -43,6 +45,8 @@ int main() {
 
     base_display->draw_snake();
 
+    base_display->draw_game();
+
     while (!game.has_collided()) {
         now = std::chrono::steady_clock::now();
 
@@ -53,8 +57,6 @@ int main() {
         if (delta_time < MILLISECS_PER_UPDATES) {
             std::this_thread::sleep_for(MILLISECS_PER_UPDATES - delta_time);
         }
-
-        base_display->move_tail();
 
         game.update(get_dir());
 
@@ -68,14 +70,18 @@ int main() {
     base_display->clear_screen();
 }
 
+bool is_key_pressed(int vKey) {
+    return GetAsyncKeyState(vKey) & 0x8000;
+}
+
 std::optional<VelDir> get_dir() {
-    if (GetAsyncKeyState(VK_UP)) {
+    if (is_key_pressed(VK_UP)) {
         return VelDir::Up;
-    } else if (GetAsyncKeyState(VK_DOWN)) {
+    } else if (is_key_pressed(VK_DOWN)) {
         return VelDir::Down;
-    } else if (GetAsyncKeyState(VK_LEFT)) {
+    } else if (is_key_pressed(VK_LEFT)) {
         return VelDir::Left;
-    } else if (GetAsyncKeyState(VK_RIGHT)) {
+    } else if (is_key_pressed(VK_RIGHT)) {
         return VelDir::Right;
     }
     return std::nullopt;
