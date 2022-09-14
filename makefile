@@ -15,3 +15,5 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	rm -f $(EXECUTABLE).exe $(OBJECTS)
+
+build-clean: clean $(EXECUTABLE)
