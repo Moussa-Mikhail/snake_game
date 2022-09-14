@@ -22,7 +22,7 @@ const auto MILLISECS_PER_UPDATES = std::chrono::milliseconds((int)(MILLISECS_PER
 int main() {
     SnakeGameModel game(30, 15);
 
-    Display display(game);
+    TerminalDisplay display(game);
 
     DisplayInterface *base_display = &display;
 

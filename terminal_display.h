@@ -4,9 +4,9 @@
 #include "display_interface.h"
 #include "snake_game_model.h"
 
-class Display : public DisplayInterface {
+class TerminalDisplay : public DisplayInterface {
    public:
-    explicit Display(const SnakeGameModel &game) : WIDTH(game.WIDTH), HEIGHT(game.HEIGHT), game{game} {
+    explicit TerminalDisplay(const SnakeGameModel &game) : WIDTH(game.WIDTH), HEIGHT(game.HEIGHT), game{game} {
         set_VT_mode();
 
         set_last_tail_piece_pos();

@@ -21,37 +21,37 @@ void setCursorPosition(Pos pos) {
     setCursorPosition(x, y);
 }
 
-const wchar_t *Display::RED = L"\x1b[31m";
+const wchar_t *TerminalDisplay::RED = L"\x1b[31m";
 
-const wchar_t *Display::WHITE = L"\x1b[37m";
+const wchar_t *TerminalDisplay::WHITE = L"\x1b[37m";
 
-const wchar_t *Display::GREEN = L"\x1b[32m";
+const wchar_t *TerminalDisplay::GREEN = L"\x1b[32m";
 
-const wchar_t *Display::YELLOW = L"\x1b[33m";
+const wchar_t *TerminalDisplay::YELLOW = L"\x1b[33m";
 
-const wchar_t *Display::DEFAULT = L"\x1b[0m";
+const wchar_t *TerminalDisplay::DEFAULT = L"\x1b[0m";
 
-const wchar_t *Display::WALL = L"X";
+const wchar_t *TerminalDisplay::WALL = L"X";
 
-const wchar_t *Display::WALL_COLOR = Display::RED;
+const wchar_t *TerminalDisplay::WALL_COLOR = TerminalDisplay::RED;
 
-const wchar_t *Display::HEAD = L"H";
+const wchar_t *TerminalDisplay::HEAD = L"H";
 
-const wchar_t *Display::HEAD_COLOR = Display::WHITE;
+const wchar_t *TerminalDisplay::HEAD_COLOR = TerminalDisplay::WHITE;
 
-const wchar_t *Display::TAIL = L"T";
+const wchar_t *TerminalDisplay::TAIL = L"T";
 
-const wchar_t *Display::TAIL_COLOR = Display::GREEN;
+const wchar_t *TerminalDisplay::TAIL_COLOR = TerminalDisplay::GREEN;
 
-const wchar_t *Display::FOOD = L"F";
+const wchar_t *TerminalDisplay::FOOD = L"F";
 
-const wchar_t *Display::FOOD_COLOR = Display::YELLOW;
+const wchar_t *TerminalDisplay::FOOD_COLOR = TerminalDisplay::YELLOW;
 
-void Display::set_last_tail_piece_pos() {
+void TerminalDisplay::set_last_tail_piece_pos() {
     last_tail_piece_pos = game.get_tail_pos().back();
 }
 
-void Display::set_VT_mode() {
+void TerminalDisplay::set_VT_mode() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
     DWORD dwMode = 0;
@@ -63,7 +63,7 @@ void Display::set_VT_mode() {
     SetConsoleMode(hOut, dwMode);
 }
 
-void Display::clear_screen() {
+void TerminalDisplay::clear_screen() {
     CONSOLE_SCREEN_BUFFER_INFO s;
 
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -83,7 +83,7 @@ void Display::clear_screen() {
     SetConsoleCursorPosition(console, tl);
 }
 
-void Display::draw_walls() {
+void TerminalDisplay::draw_walls() {
     for (int i = 0; i < WIDTH; i++) {
         setCursorPosition(i, 0);
 
@@ -105,7 +105,7 @@ void Display::draw_walls() {
     }
 }
 
-void Display::draw_snake() {
+void TerminalDisplay::draw_snake() {
     setCursorPosition(game.get_head_pos());
 
     std::wcout << HEAD_COLOR << HEAD_COLOR << DEFAULT;
@@ -119,7 +119,7 @@ void Display::draw_snake() {
     }
 }
 
-void Display::draw_game() {
+void TerminalDisplay::draw_game() {
     redraw_snake();
 
     draw_food();
@@ -127,13 +127,13 @@ void Display::draw_game() {
     draw_score();
 }
 
-void Display::redraw_snake() {
+void TerminalDisplay::redraw_snake() {
     move_tail();
 
     redraw_head();
 }
 
-void Display::move_tail() {
+void TerminalDisplay::move_tail() {
     if (!game.is_snake_moving()) {
         return;
     }
@@ -147,25 +147,25 @@ void Display::move_tail() {
     std::wcout << TAIL_COLOR << TAIL << DEFAULT;
 }
 
-void Display::redraw_head() const {
+void TerminalDisplay::redraw_head() const {
     setCursorPosition(game.get_head_pos());
 
     std::wcout << HEAD_COLOR << HEAD << DEFAULT;
 }
 
-void Display::draw_food() const {
+void TerminalDisplay::draw_food() const {
     setCursorPosition(game.get_food_pos());
 
     std::wcout << FOOD_COLOR << FOOD << DEFAULT;
 }
 
-void Display::draw_score() const {
+void TerminalDisplay::draw_score() const {
     setCursorPosition(0, HEIGHT + 1);
 
     std::cout << "Score: " << game.get_score();
 }
 
-void Display::draw_game_over() {
+void TerminalDisplay::draw_game_over() {
     std::string game_over = "Game Over";
 
     setCursorPosition(WIDTH / 2 - (int)game_over.length() / 2, HEIGHT / 2);
@@ -179,7 +179,7 @@ void Display::draw_game_over() {
     std::cout << exit_message;
 }
 
-void Display::draw_welcome_message() {
+void TerminalDisplay::draw_welcome_message() {
     std::string welcome = "Welcome to Snake";
 
     setCursorPosition(WIDTH / 2 - (int)welcome.length() / 2, HEIGHT / 2);
@@ -193,7 +193,7 @@ void Display::draw_welcome_message() {
     std::cout << start_message;
 }
 
-void Display::clear_last_piece() {
+void TerminalDisplay::clear_last_piece() {
     setCursorPosition(last_tail_piece_pos);
 
     std::wcout << L" ";
