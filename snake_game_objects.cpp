@@ -4,7 +4,19 @@
 #include <algorithm>
 #include <stdexcept>
 
-Vel Vel::from_dir(VelDir dir) {
+Pos &Pos::operator+=(const Vel &vel) {
+    x += vel.x;
+
+    y += vel.y;
+
+    return *this;
+}
+
+bool Pos::operator==(const Pos &rhs) const {
+    return x == rhs.x && y == rhs.y;
+}
+
+Vel Vel::from_dir(const VelDir dir) {
     switch (dir) {
         case VelDir::Up:
             return Vel(0, -1);
@@ -33,18 +45,6 @@ bool Vel::operator!=(const Vel &rhs) const {
 
 Vel Vel::operator-() const {
     return Vel(-x, -y);
-}
-
-Pos &Pos::operator+=(const Vel &vel) {
-    x += vel.x;
-
-    y += vel.y;
-
-    return *this;
-}
-
-bool Pos::operator==(const Pos &rhs) const {
-    return x == rhs.x && y == rhs.y;
 }
 
 void Head::update_pos() {
@@ -79,8 +79,15 @@ Snake::Snake(int init_x, int init_y, int init_length) : head(init_x, init_y) {
     }
 };
 
-int Snake::get_length() const { return (int)tail.size(); };
+void Snake::update(std::optional<VelDir> dir) {
+    auto new_vel = head.get_new_vel(dir);
 
+    if (is_moving() || new_vel != Vel(0, 0)) {
+        update_tail();
+    }
+
+    update_head(new_vel);
+}
 void Snake::update_head(const Vel new_vel) {
     head.vel = new_vel;
 
@@ -93,24 +100,6 @@ void Snake::update_tail() {
     }
 
     tail[0].pos = head.pos;
-}
-
-void Snake::update(std::optional<VelDir> dir) {
-    auto new_vel = head.get_new_vel(dir);
-
-    if (is_moving() || new_vel != Vel(0, 0)) {
-        update_tail();
-    }
-
-    update_head(new_vel);
-}
-
-bool Snake::is_moving() const { return !(head.vel == Vel(0, 0)); }
-
-bool Snake::has_collided_with_tail() const {
-    return std::any_of(tail.begin(), tail.end(), [this](const auto &tail_piece) {
-        return tail_piece.pos == this->head.pos;
-    });
 }
 
 void Snake::grow_tail() {
@@ -130,3 +119,13 @@ void Snake::grow_tail() {
 
     tail.push_back(new_piece);
 }
+
+int Snake::get_length() const { return (int)tail.size(); };
+
+bool Snake::has_collided_with_tail() const {
+    return std::any_of(tail.begin(), tail.end(), [this](const auto &tail_piece) {
+        return tail_piece.pos == this->head.pos;
+    });
+}
+
+bool Snake::is_moving() const { return !(head.vel == Vel(0, 0)); }

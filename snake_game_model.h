@@ -1,5 +1,5 @@
-#ifndef SNAKE_GAME_H
-#define SNAKE_GAME_H
+#ifndef SNAKE_GAME_MODEL_H
+#define SNAKE_GAME_MODEL_H
 
 #include <string>
 #include <vector>
@@ -14,7 +14,9 @@ class SnakeGameModel {
 
     const int INITIAL_LENGTH = 3;
 
-    SnakeGameModel(int width = 15, int height = 15, int length = 3) : WIDTH(width), HEIGHT(height), INITIAL_LENGTH(length) {
+    SnakeGameModel() = default;
+
+    SnakeGameModel(int width = 30, int height = 15, int length = 3) : WIDTH(width), HEIGHT(height), INITIAL_LENGTH(length) {
         int distance_from_center = 4;
 
         int init_x = WIDTH / 2 - distance_from_center;
@@ -28,13 +30,13 @@ class SnakeGameModel {
 
     void update(std::optional<VelDir> dir);
 
-    int get_score() const;
-
     Pos get_head_pos() const;
 
     std::vector<Pos> get_tail_pos() const;
 
     Pos get_food_pos() const;
+
+    int get_score() const;
 
     bool has_collided() const;
 

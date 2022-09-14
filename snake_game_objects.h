@@ -11,21 +11,7 @@ enum class VelDir {
     Right
 };
 
-struct Vel {
-    int x;
-
-    int y;
-
-    Vel(int x = 0, int y = 0) : x(x), y(y){};
-
-    static Vel from_dir(VelDir dir);
-
-    bool operator==(const Vel &rhs) const;
-
-    bool operator!=(const Vel &rhs) const;
-
-    Vel operator-() const;
-};
+struct Vel;
 
 struct Pos {
     int x;
@@ -37,6 +23,22 @@ struct Pos {
     Pos &operator+=(const Vel &vel);
 
     bool operator==(const Pos &rhs) const;
+};
+
+struct Vel {
+    int x;
+
+    int y;
+
+    Vel(int x = 0, int y = 0) : x(x), y(y){};
+
+    static Vel from_dir(const VelDir dir);
+
+    bool operator==(const Vel &rhs) const;
+
+    bool operator!=(const Vel &rhs) const;
+
+    Vel operator-() const;
 };
 
 struct SnakePiece {
@@ -69,11 +71,11 @@ class Snake {
 
     void update(std::optional<VelDir> dir);
 
+    void grow_tail();
+
     int get_length() const;
 
     bool has_collided_with_tail() const;
-
-    void grow_tail();
 
     bool is_moving() const;
 

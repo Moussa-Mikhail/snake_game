@@ -3,8 +3,6 @@
 
 #include <vector>
 
-// #include "snake_game_objects.h"
-
 class DisplayInterface {
    public:
     virtual void draw_walls() = 0;

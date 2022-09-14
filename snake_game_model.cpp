@@ -1,4 +1,3 @@
-// Implementation file for SnakeGame class
 
 #include "snake_game_model.h"
 

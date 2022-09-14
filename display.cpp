@@ -105,14 +105,6 @@ void Display::draw_walls() {
     }
 }
 
-void Display::clear_last_piece() {
-    setCursorPosition(last_tail_piece_pos);
-
-    std::wcout << L" ";
-
-    set_last_tail_piece_pos();
-}
-
 void Display::draw_snake() {
     setCursorPosition(game.get_head_pos());
 
@@ -127,15 +119,11 @@ void Display::draw_snake() {
     }
 }
 
-void Display::draw_score() const {
-    setCursorPosition(0, HEIGHT + 1);
-
-    std::cout << "Score: " << game.get_score();
-}
-
 void Display::draw_game() {
-    draw_food();
     redraw_snake();
+
+    draw_food();
+
     draw_score();
 }
 
@@ -171,6 +159,12 @@ void Display::draw_food() const {
     std::wcout << FOOD_COLOR << FOOD << DEFAULT;
 }
 
+void Display::draw_score() const {
+    setCursorPosition(0, HEIGHT + 1);
+
+    std::cout << "Score: " << game.get_score();
+}
+
 void Display::draw_game_over() {
     std::string game_over = "Game Over";
 
@@ -197,4 +191,12 @@ void Display::draw_welcome_message() {
     setCursorPosition(WIDTH / 2 - (int)start_message.length() / 2, HEIGHT / 2 + 1);
 
     std::cout << start_message;
+}
+
+void Display::clear_last_piece() {
+    setCursorPosition(last_tail_piece_pos);
+
+    std::wcout << L" ";
+
+    set_last_tail_piece_pos();
 }
