@@ -1,5 +1,5 @@
 
-#include "display.h"
+#include "terminal_display.h"
 
 #include <windows.h>
 
