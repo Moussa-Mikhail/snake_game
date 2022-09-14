@@ -27,6 +27,10 @@ bool Vel::operator==(const Vel &rhs) const {
     return x == rhs.x && y == rhs.y;
 }
 
+Vel Vel::operator-() const {
+    return Vel(-x, -y);
+}
+
 Pos &Pos::operator+=(const Vel &vel) {
     x += vel.x;
 

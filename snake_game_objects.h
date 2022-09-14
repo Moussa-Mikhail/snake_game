@@ -21,6 +21,8 @@ struct Vel {
     static Vel from_dir(VelDir dir);
 
     bool operator==(const Vel &rhs) const;
+
+    Vel operator-() const;
 };
 
 struct Pos {
