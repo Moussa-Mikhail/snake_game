@@ -53,6 +53,8 @@ struct Head : SnakePiece {
     void update_pos();
 
     void update_dir(std::optional<VelDir> dir);
+
+    Vel get_new_vel(std::optional<VelDir> dir) const;
 };
 
 class Snake {
