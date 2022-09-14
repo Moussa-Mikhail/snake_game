@@ -27,6 +27,10 @@ bool Vel::operator==(const Vel &rhs) const {
     return x == rhs.x && y == rhs.y;
 }
 
+bool Vel::operator!=(const Vel &rhs) const {
+    return !(rhs == *this);
+}
+
 Vel Vel::operator-() const {
     return Vel(-x, -y);
 }
@@ -43,14 +47,28 @@ bool Pos::operator==(const Pos &rhs) const {
     return x == rhs.x && y == rhs.y;
 }
 
-void Head::update_dir(std::optional<VelDir> dir) {
-    if (dir) {
-        vel = Vel::from_dir(*dir);
-    }
-}
-
 void Head::update_pos() {
     pos += vel;
+}
+
+Vel Head::get_new_vel(std::optional<VelDir> dir) const {
+    if (!dir) {
+        return vel;
+    }
+
+    auto dir_actual = dir.value();
+
+    auto new_vel = Vel::from_dir(dir_actual);
+
+    if (new_vel == -vel) {
+        return vel;
+    }
+
+    if (vel == Vel(0, 0) && dir_actual == VelDir::Left) {
+        return vel;
+    }
+
+    return new_vel;
 }
 
 Snake::Snake(int init_x, int init_y, int init_length) : head(init_x, init_y) {
@@ -63,8 +81,8 @@ Snake::Snake(int init_x, int init_y, int init_length) : head(init_x, init_y) {
 
 int Snake::get_length() const { return (int)tail.size(); };
 
-void Snake::update_head(std::optional<VelDir> dir) {
-    head.update_dir(dir);
+void Snake::update_head(const Vel new_vel) {
+    head.vel = new_vel;
 
     head.update_pos();
 }
@@ -78,11 +96,13 @@ void Snake::update_tail() {
 }
 
 void Snake::update(std::optional<VelDir> dir) {
-    if (is_moving() || dir) {
+    auto new_vel = head.get_new_vel(dir);
+
+    if (is_moving() || new_vel != Vel(0, 0)) {
         update_tail();
     }
 
-    update_head(dir);
+    update_head(new_vel);
 }
 
 bool Snake::is_moving() const { return !(head.vel == Vel(0, 0)); }

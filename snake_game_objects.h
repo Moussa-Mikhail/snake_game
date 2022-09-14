@@ -22,6 +22,8 @@ struct Vel {
 
     bool operator==(const Vel &rhs) const;
 
+    bool operator!=(const Vel &rhs) const;
+
     Vel operator-() const;
 };
 
@@ -52,8 +54,6 @@ struct Head : SnakePiece {
 
     void update_pos();
 
-    void update_dir(std::optional<VelDir> dir);
-
     Vel get_new_vel(std::optional<VelDir> dir) const;
 };
 
@@ -78,7 +78,7 @@ class Snake {
     bool is_moving() const;
 
    private:
-    void update_head(std::optional<VelDir> dir);
+    void update_head(Vel new_vel);
 
     void update_tail();
 };
