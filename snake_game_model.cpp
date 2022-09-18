@@ -63,11 +63,21 @@ void SnakeGameModel::replace_food() {
 
     static std::uniform_int_distribution distribution_y(1, HEIGHT - 2);
 
-    auto x = distribution_x(generator);
+    bool overlaps_snake = true;
 
-    auto y = distribution_y(generator);
+    Pos new_pos;
 
-    food = Food(x, y);
+    while (overlaps_snake) {
+        const auto new_x = distribution_x(generator);
+
+        const auto new_y = distribution_y(generator);
+
+        new_pos = Pos(new_x, new_y);
+
+        overlaps_snake = new_pos == snake.head.pos || snake.overlaps_tail(new_pos);
+    }
+
+    food = Food(new_pos);
 }
 
 bool SnakeGameModel::is_snake_moving() const {
