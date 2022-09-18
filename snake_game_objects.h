@@ -94,6 +94,6 @@ struct Food {
 
     Food(int x, int y) : pos(x, y){};
 
-    explicit Food(const Pos &pos) : pos(pos){};
+    explicit Food(Pos pos) : pos(pos){};
 };
 #endif
