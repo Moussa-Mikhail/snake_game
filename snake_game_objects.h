@@ -79,6 +79,8 @@ class Snake {
 
     bool is_moving() const;
 
+    bool overlaps_tail(Pos pos) const;
+
    private:
     void update_head(Vel new_vel);
 

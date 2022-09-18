@@ -122,10 +122,14 @@ void Snake::grow_tail() {
 
 int Snake::get_length() const { return (int)tail.size(); };
 
-bool Snake::has_collided_with_tail() const {
-    return std::any_of(tail.begin(), tail.end(), [this](const auto &tail_piece) {
-        return tail_piece.pos == this->head.pos;
+bool Snake::overlaps_tail(Pos pos) const {
+    return std::any_of(tail.begin(), tail.end(), [pos](const SnakePiece &piece) {
+        return piece.pos == pos;
     });
+}
+
+bool Snake::has_collided_with_tail() const {
+    return overlaps_tail(head.pos);
 }
 
 bool Snake::is_moving() const { return !(head.vel == Vel(0, 0)); }
