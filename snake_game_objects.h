@@ -91,5 +91,7 @@ struct Food {
     Food() = default;
 
     Food(int x, int y) : pos(x, y){};
+
+    explicit Food(const Pos &pos) : pos(pos){};
 };
 #endif
