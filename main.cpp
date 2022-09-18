@@ -9,15 +9,15 @@
 #include "snake_game_model.h"
 #include "terminal_display.h"
 
-std::optional<VelDir> get_dir();
-
-bool is_key_pressed(int vKey);
-
-const double UPDATES_PER_SECOND = 1;
+const double UPDATES_PER_SECOND = 3;
 
 const int MILLISECS_PER_SECONDS = int(std::pow(10, 3));
 
 const auto MILLISECS_PER_UPDATES = std::chrono::milliseconds((int)(MILLISECS_PER_SECONDS / UPDATES_PER_SECOND));
+
+bool is_key_pressed(int vKey);
+
+std::optional<VelDir> get_dir();
 
 int main() {
     SnakeGameModel game(30, 15);
@@ -51,11 +51,11 @@ int main() {
 
         auto delta_time = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time);
 
-        last_time = now;
-
         if (delta_time < MILLISECS_PER_UPDATES) {
             std::this_thread::sleep_for(MILLISECS_PER_UPDATES - delta_time);
         }
+
+        last_time = std::chrono::steady_clock::now();
 
         game.update(get_dir());
 
