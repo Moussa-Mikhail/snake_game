@@ -37,7 +37,11 @@ void KeyPoller::update_dir() {
             std::this_thread::sleep_for(MILLISECS_PER_POLLS - delta_time);
         }
 
-        dir = get_arrow_key();
+        auto new_dir = get_arrow_key();
+
+        if (new_dir.has_value()) {
+            dir = new_dir;
+        }
 
         last_time = steady_clock::now();
     }
@@ -62,6 +66,6 @@ std::optional<VelDir> KeyPoller::get_arrow_key() {
     return std::nullopt;
 }
 
-bool KeyPoller::is_key_pressed(int vKey) const {
+bool KeyPoller::is_key_pressed(int vKey) {
     return GetAsyncKeyState(vKey) & 0x8000;
 }
