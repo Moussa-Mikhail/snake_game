@@ -1,11 +1,10 @@
 #include <math.h>
-#include <windows.h>
 
 #include <chrono>
 #include <iostream>
-#include <string>
 #include <thread>
 
+#include "key_poller.h"
 #include "snake_game_model.h"
 #include "terminal_display.h"
 
@@ -15,13 +14,9 @@ using std::chrono::steady_clock;
 
 const double UPDATES_PER_SECOND = 3;
 
-const int MILLISECS_PER_SECONDS = int(std::pow(10, 3));
+extern const int MILLISECS_PER_SECONDS = int(std::pow(10, 3));
 
 const auto MILLISECS_PER_UPDATES = ms((int)(MILLISECS_PER_SECONDS / UPDATES_PER_SECOND));
-
-bool is_key_pressed(int vKey);
-
-std::optional<VelDir> get_dir();
 
 int main() {
     SnakeGameModel game(30, 15);
@@ -50,6 +45,10 @@ int main() {
 
     base_display->draw_game();
 
+    auto key_poller = KeyPoller();
+
+    key_poller.start_polling();
+
     while (!game.has_collided()) {
         now = steady_clock::now();
 
@@ -61,7 +60,9 @@ int main() {
 
         last_time = steady_clock::now();
 
-        game.update(get_dir());
+        auto dir = key_poller.get_dir();
+
+        game.update(dir);
 
         base_display->draw_game();
     }
@@ -71,21 +72,4 @@ int main() {
     std::cin.ignore(1);
 
     base_display->clear_screen();
-}
-
-bool is_key_pressed(int vKey) {
-    return GetAsyncKeyState(vKey) & 0x8000;
-}
-
-std::optional<VelDir> get_dir() {
-    if (is_key_pressed(VK_UP)) {
-        return VelDir::Up;
-    } else if (is_key_pressed(VK_DOWN)) {
-        return VelDir::Down;
-    } else if (is_key_pressed(VK_LEFT)) {
-        return VelDir::Left;
-    } else if (is_key_pressed(VK_RIGHT)) {
-        return VelDir::Right;
-    }
-    return std::nullopt;
 }
