@@ -16,7 +16,7 @@ class KeyPoller {
 
     std::thread poller_thread;
 
-    std::optional<VelDir> get_arrow_key();
+    static std::optional<VelDir> get_arrow_key();
 
-    bool is_key_pressed(int vKey) const;
+    static bool is_key_pressed(int vKey);
 };
